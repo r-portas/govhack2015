@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+   <div class="jumbotron">
+       <h1>How's My Suburb?</h1>
+       <p class="lead">
+           Welcome to How's My Suburb? This is a service for finding information regarding community services
+           and infrastructure. Enter your desired suburb or postcode to find out what services are available
+           in your area as well as other information regarding available public transport, internet services
+           and much more.
+       </p>
+       <div class="span-12">
+         <form action="." method="POST" class="form-inline">
+              <input type="text" name="text" placeholder="Suburb" class="form-control input-lg">
+             <input class="btn btn-small btn-primary" value="Search" type="submit">
+         </form>
+      </div>
+    </div>
+
+    <div class="row serviceDescription">
+        <div class="col-md-6">
+            <h4>Hospitals</h4>
+            <p>Finds the closest hospitals to a given suburb and display the number of beds and facilities they have</p>
+
+            <h4>Public transport</h4>
+            <p>Displays all public transport stops on a map for a given suburb, allowing the user to see the closest stop to them</p>
+
+            <h4>Broadband Availability</h4>
+            <p>Finds information on the internet connections within a suburb including fibre and mobile availability</p>
+        </div>
+
+        <div class="col-md-6">
+            <h4>Average Suburb Tax Rates</h4>
+            <p>Shows average tax rates from suburbs, including medicare levels and HELP debt information</p>
+
+            <h4>Crime Data</h4>
+            <p>Finds information relating to crime in each suburb and compares it to the average crime rate</p>
+
+        </div>
+    </div>
+{% endblock %}

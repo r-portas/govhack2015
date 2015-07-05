@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <script>
+    var lat = {{lat}};
+    var lng = {{lng}};
+
+    var sub_tax = {{chart_tax[0]}}
+    var sub_medi = {{chart_tax[1]}}
+    var sub_hex = {{chart_tax[2]}}
+
+    var suburb = "{{suburb}}";
+    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+  </script>
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css">
+  <link href="{{ url_for('static', filename='css/leaflet.awesome-markers.css') }}" rel="stylesheet">
+  <script src="{{ url_for('static', filename='js/leaflet.awesome-markers.min.js') }}"></script>
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+
+    <h2>Results for {{ suburb }}</h2>
+    <div id="map" style="height: 300px"></div>
+    <script src="{{ url_for('static', filename='js/map.js') }}"> </script>
+
+    <h3>Comparison to other suburbs (Current Suburb, Average)</h3>
+    <canvas id="chart" height="400" width="700"></canvas>
+    <script src="{{ url_for('static', filename='js/myChart.js') }}"> </script>
+
+          <h3>Details</h3>
+              <div class="panel-group" id="accordion">
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Broadband Availability</a>
+                          </h4>
+                      </div>
+                      <div id="collapseOne" class="panel-collapse collapse in">
+                          <div class="panel-body">
+                            <table class="table table-striped">
+                              {% if results != [] %}
+                              <thead>
+                                <tr>
+                                  <th>Name</th>
+                                  <th>Value</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for row in results %}
+                                <tr>
+                                  <td>{{row[0]}}</td>
+                                  <td>{{row[1]}}</td>
+                                </tr>
+                                {% endfor %}
+                              {% else %}
+                                <p>No internet data available</p>
+                              {% endif %}
+                              </tbody>
+                            </table>
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+                  <div class="panel panel-default">
+                  <div class="panel-heading">
+                      <h4 class="panel-title">
+                          <a data-toggle="collapse" data-parent="#accordion" href="#collapseFour">Crime Data</a>
+                      </h4>
+                  </div>
+                  <div id="collapseFour" class="panel-collapse collapse">
+                      <div class="panel-body">
+                        <p>Average crime rate for suburb: {{avg_crime}}</p>
+                        <p>Average crime rate for state: 70177</p>
+                      </div>
+                  </div>
+                </div>
+              </div>
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Nearby Hospital Availability</a>
+                          </h4>
+                      </div>
+                      <div id="collapseTwo" class="panel-collapse collapse">
+                          <div class="panel-body">
+                            {% for row in hospitals %}
+                              <p><b>{{row[0]}}</b></p>
+                              <p>Approximately {{"%0.2f" % row[8]}} km away</p>
+                              <p>{{row[1]}}</p>
+                              <p>{{row[2]}}</p>
+                              <p>Number of beds: {{row[5]}}</p>
+                              {% if row[6] %}
+                                <p>Has emergency centre</p>
+                              {% endif %}
+                              <br>
+                            {% endfor %}
+                          </div>
+                      </div>
+                  </div>
+                  <div class="panel panel-default">
+                      <div class="panel-heading">
+                          <h4 class="panel-title">
+                              <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Tax Data</a>
+                          </h4>
+                      </div>
+                      <div id="collapseThree" class="panel-collapse collapse">
+                          <div class="panel-body">
+                            <table class="table table-striped">
+                              {% if tax != None %}
+                              <thead>
+                                <tr>
+                                  <th>Name</th>
+                                  <th>Value</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% for row in tax %}
+                                <tr>
+                                  <td>{{row[0]}}</td>
+                                  <td>{{row[1]}}</td>
+                                </tr>
+                                {% endfor %}
+                              {% else %}
+                                <p>No tax data available</p>
+                              {% endif %}
+                          </div>
+                      </div>
+
+        </div>
+
+  </div>
+
+
+
+{% endblock %}

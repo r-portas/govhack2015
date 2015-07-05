@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>How's My Suburb?</title>
+    {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+</head>
+<style>
+    body {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    .container-narrow {
+        margin: 0 auto;
+        max-width: 700px;
+    }
+    .container-narrow > hr {
+        margin: 40px 0 0 0;
+    }
+    .jumbotron {
+        margin: 5px 0;
+        text-align: centre;
+        background-color: white;
+    }
+    .jumbotron h1 {
+        font-size: 58px;
+        line-height: 1;
+        font-weight: bold;
+    }
+    .jumbotron .btn {
+        font-size: 21px;
+        padding: 5px 5px;
+    }
+    .jumbotron input {
+        font-size: 21px;
+    }
+    .serviceDescription {
+        margin: 40px 0;
+    }
+    .serviceDescription p + h4 {
+        margin-top: 28px;
+    }
+
+</style>
+<body>
+    <div class="container-narrow">
+        <ul class="nav nav-pills pull-right">
+            <li class="active"><a href="/">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <a href="/"><h3 class="text-muted">How's My Suburb</h3></a>
+        <hr>
+
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
